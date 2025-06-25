@@ -1,0 +1,647 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package View;
+
+import Controller.ConexaoComBancoDados;
+import Controller.RetiradaDoacaoController;
+import Model.ChamadoModel;
+import Model.ColaboradorModel;
+import Model.ProjetoModel;
+import Model.RetiradaDoacaoModel;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author ALUNO
+ */
+public class TelaRetiradaDoacoes extends javax.swing.JFrame {
+
+    /**
+     * Creates new form Relatorios
+     */
+    RetiradaDoacaoController controller = new RetiradaDoacaoController();
+
+    ColaboradorModel colaborador = new ColaboradorModel();
+
+    TelaRetiradaDoacoes(ColaboradorModel usuarioLogado) {
+        colaborador = usuarioLogado;
+
+        initComponents();
+        listaRetiradaDoacao();
+    }
+
+    private void cadastrarRetiradaDoacao() {
+        try {
+            // Criar objeto do modelo (substitua pelo nome real se for diferente)
+            RetiradaDoacaoModel retirada = new RetiradaDoacaoModel();
+
+            // Pegando os valores dos campos da interface
+            retirada.setTipo(campoTipoRetirada.getText());
+            retirada.setQuantidade(Integer.parseInt(campoQuantidadeRetirada.getText()));
+            retirada.setDestinatario(campoDataRetirada.getText());
+
+            // Chamar o controller
+            RetiradaDoacaoController controller = new RetiradaDoacaoController();
+            Boolean resultado = controller.cadastrar(retirada);
+
+            // Mostrar resultado
+            JOptionPane.showMessageDialog(this, resultado);
+
+            // Atualiza a tabela após cadastro
+            atualizarTabelaRetirada();
+
+            // Limpa os campos da interface
+            limparCamposRetirada();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "A quantidade deve ser um número inteiro.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar retirada: " + e.getMessage());
+        }
+    }
+
+    private void atualizarTabelaRetirada() {
+        RetiradaDoacaoController controller = new RetiradaDoacaoController();
+        List<RetiradaDoacaoModel> lista = controller.listar(); // ou buscarLista()
+
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Nome");
+        modelo.addColumn("Tipo");
+        modelo.addColumn("Quantidade");
+        modelo.addColumn("Destino");
+
+        for (RetiradaDoacaoModel r : lista) {
+            modelo.addRow(new Object[]{
+                r.getIdRetiradaDoacaoArrecadacao(),
+                r.getTipo(),
+                r.getQuantidade(),
+                r.getDestinatario()
+            });
+        }
+
+        tabelaRetiradaDoacao.setModel(modelo);
+    }
+
+    private void limparCamposRetirada() {
+        campoDestinatarioRetirada.setText("");
+        campoTipoRetirada.setText("");
+        campoQuantidadeRetirada.setText("");
+        campoDataRetirada.setText("");
+    }
+
+    public void listaRetiradaDoacao() {
+
+        List<RetiradaDoacaoModel> listarRetiradaDoacao = controller.listar();
+
+        DefaultTableModel modelo = (DefaultTableModel) tabelaRetiradaDoacao.getModel();
+
+        modelo.setRowCount(0);
+
+        for (RetiradaDoacaoModel c : listarRetiradaDoacao) {
+            modelo.addRow(new Object[]{
+                c.getDestinatario(),
+                c.getTipo(),
+                c.getQuantidade(),
+                c.getData()
+
+            });
+
+        }
+
+        // Oculta a coluna do ID (coluna 0 agora)
+        tabelaRetiradaDoacao.getColumnModel().getColumn(4).setMinWidth(0);
+        tabelaRetiradaDoacao.getColumnModel().getColumn(4).setMaxWidth(0);
+        tabelaRetiradaDoacao.getColumnModel().getColumn(4).setWidth(0);
+    }
+    
+    private void filtrarRetiradas(String filtro) {
+    List<RetiradaDoacaoModel> lista = controller.listar();
+
+    DefaultTableModel modelo = new DefaultTableModel();
+    modelo.addColumn("Destinatário");
+    modelo.addColumn("Tipo");
+    modelo.addColumn("Quantidade");
+    modelo.addColumn("Data");
+
+    for (RetiradaDoacaoModel r : lista) {
+        // Converte tudo para minúsculas para busca mais flexível
+        if (r.getDestinatario().toLowerCase().contains(filtro.toLowerCase()) ||
+            r.getTipo().toLowerCase().contains(filtro.toLowerCase()) ||
+            r.getData().toLowerCase().contains(filtro.toLowerCase())) {
+
+            modelo.addRow(new Object[]{
+                r.getDestinatario(),
+                r.getTipo(),
+                r.getQuantidade(),
+                r.getData()
+            });
+        }
+    }
+
+    tabelaRetiradaDoacao.setModel(modelo);
+}
+
+
+
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        botaoVoltar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelaRetiradaDoacao = new javax.swing.JTable();
+        painelAdicionar = new javax.swing.JPanel();
+        destinatarioRetirada = new javax.swing.JLabel();
+        campoDestinatarioRetirada = new javax.swing.JTextField();
+        tipoRetirada = new javax.swing.JLabel();
+        quantidadeRetirada = new javax.swing.JLabel();
+        dataRetirada = new javax.swing.JLabel();
+        campoTipoRetirada = new javax.swing.JTextField();
+        campoQuantidadeRetirada = new javax.swing.JTextField();
+        campoDataRetirada = new javax.swing.JTextField();
+        tituloRetirada = new javax.swing.JLabel();
+        botaoAdicionarRetirada = new javax.swing.JButton();
+        botaoExcluirRetirada = new javax.swing.JButton();
+        botao = new javax.swing.JButton();
+        pesquisarRetirada = new javax.swing.JTextField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel2.setBackground(new java.awt.Color(153, 255, 153));
+
+        jButton1.setText("Entrada de Doações");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Funcionarios Ativos");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Relatorios");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Retirada de Doações");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Calendario");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Chamado");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setText("Projetos");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        botaoVoltar.setText("Voltar");
+        botaoVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVoltarActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setBackground(new java.awt.Color(0, 102, 0));
+
+        tabelaRetiradaDoacao.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Destinatario", "Tipo", "Quantidade", "Data"
+            }
+        ));
+        jScrollPane1.setViewportView(tabelaRetiradaDoacao);
+
+        painelAdicionar.setBackground(new java.awt.Color(153, 255, 153));
+
+        destinatarioRetirada.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        destinatarioRetirada.setText("Destinatário:");
+
+        tipoRetirada.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tipoRetirada.setText("Tipo:");
+
+        quantidadeRetirada.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        quantidadeRetirada.setText("Quantidade:");
+
+        dataRetirada.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        dataRetirada.setText("Data:");
+
+        campoTipoRetirada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoTipoRetiradaActionPerformed(evt);
+            }
+        });
+
+        campoQuantidadeRetirada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoQuantidadeRetiradaActionPerformed(evt);
+            }
+        });
+
+        tituloRetirada.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        tituloRetirada.setForeground(new java.awt.Color(0, 51, 0));
+        tituloRetirada.setText("Retiradas");
+
+        botaoAdicionarRetirada.setBackground(new java.awt.Color(0, 102, 0));
+        botaoAdicionarRetirada.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        botaoAdicionarRetirada.setForeground(new java.awt.Color(255, 255, 255));
+        botaoAdicionarRetirada.setText("Adicionar");
+        botaoAdicionarRetirada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAdicionarRetiradaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout painelAdicionarLayout = new javax.swing.GroupLayout(painelAdicionar);
+        painelAdicionar.setLayout(painelAdicionarLayout);
+        painelAdicionarLayout.setHorizontalGroup(
+            painelAdicionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelAdicionarLayout.createSequentialGroup()
+                .addGroup(painelAdicionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelAdicionarLayout.createSequentialGroup()
+                        .addGap(149, 149, 149)
+                        .addComponent(tituloRetirada))
+                    .addGroup(painelAdicionarLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(painelAdicionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(painelAdicionarLayout.createSequentialGroup()
+                                .addComponent(destinatarioRetirada)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campoDestinatarioRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(painelAdicionarLayout.createSequentialGroup()
+                                .addComponent(dataRetirada)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campoDataRetirada))
+                            .addGroup(painelAdicionarLayout.createSequentialGroup()
+                                .addComponent(tipoRetirada)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campoTipoRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(painelAdicionarLayout.createSequentialGroup()
+                                .addComponent(quantidadeRetirada)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campoQuantidadeRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(painelAdicionarLayout.createSequentialGroup()
+                        .addGap(164, 164, 164)
+                        .addComponent(botaoAdicionarRetirada)))
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+        painelAdicionarLayout.setVerticalGroup(
+            painelAdicionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelAdicionarLayout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(tituloRetirada)
+                .addGap(16, 16, 16)
+                .addGroup(painelAdicionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(destinatarioRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoDestinatarioRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(painelAdicionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tipoRetirada)
+                    .addComponent(campoTipoRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(painelAdicionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(quantidadeRetirada)
+                    .addComponent(campoQuantidadeRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(painelAdicionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoDataRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dataRetirada))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botaoAdicionarRetirada)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        botaoExcluirRetirada.setBackground(new java.awt.Color(0, 204, 51));
+        botaoExcluirRetirada.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        botaoExcluirRetirada.setForeground(new java.awt.Color(0, 51, 0));
+        botaoExcluirRetirada.setText("Excluir");
+
+        botao.setBackground(new java.awt.Color(0, 204, 51));
+        botao.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        botao.setForeground(new java.awt.Color(0, 51, 0));
+        botao.setText("Editar");
+
+        pesquisarRetirada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pesquisarRetiradaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(62, Short.MAX_VALUE)
+                .addComponent(painelAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(botaoExcluirRetirada)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(botao))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(pesquisarRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(36, 36, 36))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addComponent(pesquisarRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(154, 154, 154)
+                        .addComponent(painelAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoExcluirRetirada)
+                    .addComponent(botao))
+                .addContainerGap(168, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(botaoVoltar)
+                        .addGap(76, 76, 76)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jButton5)
+                .addGap(44, 44, 44)
+                .addComponent(jButton1)
+                .addGap(40, 40, 40)
+                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(44, 44, 44)
+                .addComponent(jButton3)
+                .addGap(48, 48, 48)
+                .addComponent(jButton6)
+                .addGap(44, 44, 44)
+                .addComponent(jButton7)
+                .addGap(95, 95, 95)
+                .addComponent(botaoVoltar)
+                .addGap(30, 30, 30))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        TelaEntradaDoacoes telaPrincipal = new TelaEntradaDoacoes(colaborador);
+        telaPrincipal.setVisible(true);
+        dispose();
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        TelaColaboradores telaPrincipal = new TelaColaboradores(colaborador);
+        telaPrincipal.setVisible(true);
+        dispose();
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        TelaHome telaPrincipal = new TelaHome(colaborador);
+        telaPrincipal.setVisible(true);
+        dispose();
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
+        TelaHome telaPrincipal = new TelaHome(colaborador);
+        telaPrincipal.setVisible(true);
+        dispose();
+// TODO add your handling code here:
+    }//GEN-LAST:event_botaoVoltarActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        TelaRetiradaDoacoes telaPrincipal = new TelaRetiradaDoacoes(colaborador);
+        telaPrincipal.setVisible(true);
+        dispose();
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        TelaRelatorios telaPrincipal = new TelaRelatorios(colaborador);
+        telaPrincipal.setVisible(true);
+        dispose();
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        TelaChamado telaPrincipal = new TelaChamado(colaborador);
+        telaPrincipal.setVisible(true);
+        dispose();
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        TelaProjetos telaPrincipal = new TelaProjetos(colaborador);
+        telaPrincipal.setVisible(true);
+        dispose();
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void campoTipoRetiradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTipoRetiradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoTipoRetiradaActionPerformed
+
+    private void campoQuantidadeRetiradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoQuantidadeRetiradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoQuantidadeRetiradaActionPerformed
+
+    private void botaoAdicionarRetiradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarRetiradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoAdicionarRetiradaActionPerformed
+
+    private void pesquisarRetiradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarRetiradaActionPerformed
+
+    }//GEN-LAST:event_pesquisarRetiradaActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(TelaRetiradaDoacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(TelaRetiradaDoacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(TelaRetiradaDoacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(TelaRetiradaDoacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botao;
+    private javax.swing.JButton botaoAdicionarRetirada;
+    private javax.swing.JButton botaoExcluirRetirada;
+    private javax.swing.JButton botaoVoltar;
+    private javax.swing.JTextField campoDataRetirada;
+    private javax.swing.JTextField campoDestinatarioRetirada;
+    private javax.swing.JTextField campoQuantidadeRetirada;
+    private javax.swing.JTextField campoTipoRetirada;
+    private javax.swing.JLabel dataRetirada;
+    private javax.swing.JLabel destinatarioRetirada;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel painelAdicionar;
+    private javax.swing.JTextField pesquisarRetirada;
+    private javax.swing.JLabel quantidadeRetirada;
+    private javax.swing.JTable tabelaRetiradaDoacao;
+    private javax.swing.JLabel tipoRetirada;
+    private javax.swing.JLabel tituloRetirada;
+    // End of variables declaration//GEN-END:variables
+}
