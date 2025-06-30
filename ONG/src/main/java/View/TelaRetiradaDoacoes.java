@@ -36,61 +36,13 @@ public class TelaRetiradaDoacoes extends javax.swing.JFrame {
         colaborador = usuarioLogado;
 
         initComponents();
-        listaRetiradaDoacao();
+       // listaRetiradaDoacao();
+
     }
 
-    private void cadastrarRetiradaDoacao() {
-        try {
-            // Criar objeto do modelo (substitua pelo nome real se for diferente)
-            RetiradaDoacaoModel retirada = new RetiradaDoacaoModel();
+   
 
-            // Pegando os valores dos campos da interface
-            retirada.setTipo(campoTipoRetirada.getText());
-            retirada.setQuantidade(Integer.parseInt(campoQuantidadeRetirada.getText()));
-            retirada.setDestinatario(campoDataRetirada.getText());
-
-            // Chamar o controller
-            RetiradaDoacaoController controller = new RetiradaDoacaoController();
-            Boolean resultado = controller.cadastrar(retirada);
-
-            // Mostrar resultado
-            JOptionPane.showMessageDialog(this, resultado);
-
-            // Atualiza a tabela após cadastro
-            atualizarTabelaRetirada();
-
-            // Limpa os campos da interface
-            limparCamposRetirada();
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "A quantidade deve ser um número inteiro.");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao cadastrar retirada: " + e.getMessage());
-        }
-    }
-
-    private void atualizarTabelaRetirada() {
-        RetiradaDoacaoController controller = new RetiradaDoacaoController();
-        List<RetiradaDoacaoModel> lista = controller.listar(); // ou buscarLista()
-
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("ID");
-        modelo.addColumn("Nome");
-        modelo.addColumn("Tipo");
-        modelo.addColumn("Quantidade");
-        modelo.addColumn("Destino");
-
-        for (RetiradaDoacaoModel r : lista) {
-            modelo.addRow(new Object[]{
-                r.getIdRetiradaDoacaoArrecadacao(),
-                r.getTipo(),
-                r.getQuantidade(),
-                r.getDestinatario()
-            });
-        }
-
-        tabelaRetiradaDoacao.setModel(modelo);
-    }
+    
 
     private void limparCamposRetirada() {
         campoDestinatarioRetirada.setText("");
@@ -101,7 +53,7 @@ public class TelaRetiradaDoacoes extends javax.swing.JFrame {
 
     public void listaRetiradaDoacao() {
 
-        List<RetiradaDoacaoModel> listarRetiradaDoacao = controller.listar();
+        List<RetiradaDoacaoModel> listarRetiradaDoacao = controller.listarTodos();
 
         DefaultTableModel modelo = (DefaultTableModel) tabelaRetiradaDoacao.getModel();
 
@@ -118,41 +70,8 @@ public class TelaRetiradaDoacoes extends javax.swing.JFrame {
 
         }
 
-        // Oculta a coluna do ID (coluna 0 agora)
-        tabelaRetiradaDoacao.getColumnModel().getColumn(4).setMinWidth(0);
-        tabelaRetiradaDoacao.getColumnModel().getColumn(4).setMaxWidth(0);
-        tabelaRetiradaDoacao.getColumnModel().getColumn(4).setWidth(0);
+       
     }
-    
-    private void filtrarRetiradas(String filtro) {
-    List<RetiradaDoacaoModel> lista = controller.listar();
-
-    DefaultTableModel modelo = new DefaultTableModel();
-    modelo.addColumn("Destinatário");
-    modelo.addColumn("Tipo");
-    modelo.addColumn("Quantidade");
-    modelo.addColumn("Data");
-
-    for (RetiradaDoacaoModel r : lista) {
-        // Converte tudo para minúsculas para busca mais flexível
-        if (r.getDestinatario().toLowerCase().contains(filtro.toLowerCase()) ||
-            r.getTipo().toLowerCase().contains(filtro.toLowerCase()) ||
-            r.getData().toLowerCase().contains(filtro.toLowerCase())) {
-
-            modelo.addRow(new Object[]{
-                r.getDestinatario(),
-                r.getTipo(),
-                r.getQuantidade(),
-                r.getData()
-            });
-        }
-    }
-
-    tabelaRetiradaDoacao.setModel(modelo);
-}
-
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -268,15 +187,19 @@ public class TelaRetiradaDoacoes extends javax.swing.JFrame {
         painelAdicionar.setBackground(new java.awt.Color(153, 255, 153));
 
         destinatarioRetirada.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        destinatarioRetirada.setForeground(new java.awt.Color(0, 0, 0));
         destinatarioRetirada.setText("Destinatário:");
 
         tipoRetirada.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tipoRetirada.setForeground(new java.awt.Color(0, 0, 0));
         tipoRetirada.setText("Tipo:");
 
         quantidadeRetirada.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        quantidadeRetirada.setForeground(new java.awt.Color(0, 0, 0));
         quantidadeRetirada.setText("Quantidade:");
 
         dataRetirada.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        dataRetirada.setForeground(new java.awt.Color(0, 0, 0));
         dataRetirada.setText("Data:");
 
         campoTipoRetirada.addActionListener(new java.awt.event.ActionListener() {
@@ -417,7 +340,7 @@ public class TelaRetiradaDoacoes extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoExcluirRetirada)
                     .addComponent(botao))
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -431,16 +354,16 @@ public class TelaRetiradaDoacoes extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
+                        .addGap(69, 69, 69)
                         .addComponent(botaoVoltar)
-                        .addGap(76, 76, 76)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -452,18 +375,20 @@ public class TelaRetiradaDoacoes extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(40, 40, 40)
                 .addComponent(jButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
                 .addComponent(jButton2)
-                .addGap(44, 44, 44)
+                .addGap(35, 35, 35)
                 .addComponent(jButton3)
-                .addGap(48, 48, 48)
+                .addGap(38, 38, 38)
                 .addComponent(jButton6)
-                .addGap(44, 44, 44)
+                .addGap(39, 39, 39)
                 .addComponent(jButton7)
-                .addGap(95, 95, 95)
+                .addGap(28, 28, 28)
                 .addComponent(botaoVoltar)
-                .addGap(30, 30, 30))
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -476,7 +401,7 @@ public class TelaRetiradaDoacoes extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -549,6 +474,20 @@ public class TelaRetiradaDoacoes extends javax.swing.JFrame {
 
     private void botaoAdicionarRetiradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarRetiradaActionPerformed
         // TODO add your handling code here:
+
+        RetiradaDoacaoModel retirada = new RetiradaDoacaoModel();
+        retirada.setDestinatario(campoDestinatarioRetirada.getText());
+        retirada.setTipo(campoTipoRetirada.getText());
+        retirada.setQuantidade(Integer.parseInt(campoQuantidadeRetirada.getText()));
+        retirada.setData(campoDataRetirada.getText()); // você pode usar JCalendar e formatar
+        retirada.setIdChamado(1); // ou pegar de outro campo, se necessário
+
+        if (controller.cadastrar(retirada)) {
+            JOptionPane.showMessageDialog(null, "Retirada cadastrada com sucesso!");
+            listaRetiradaDoacao(); // Atualiza a tabela
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar.");
+        }
     }//GEN-LAST:event_botaoAdicionarRetiradaActionPerformed
 
     private void pesquisarRetiradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarRetiradaActionPerformed
@@ -581,39 +520,14 @@ public class TelaRetiradaDoacoes extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TelaRetiradaDoacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
         /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                 ColaboradorModel colaborador= null;
+                new TelaRetiradaDoacoes(colaborador).setVisible(true);
+            }
+        });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

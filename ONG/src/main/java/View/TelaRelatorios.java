@@ -4,6 +4,8 @@
  */
 package View;
 
+import Model.ColaboradorModel;
+
 /**
  *
  * @author ALUNO
@@ -13,7 +15,11 @@ public class TelaRelatorios extends javax.swing.JFrame {
     /**
      * Creates new form Relatorios
      */
-    public TelaRelatorios() {
+   
+    
+    ColaboradorModel colaborador = new ColaboradorModel();
+    TelaRelatorios(ColaboradorModel usuarioLogado) {
+       colaborador=usuarioLogado;
         initComponents();
     }
 
@@ -29,14 +35,15 @@ public class TelaRelatorios extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         botaoEntradaDoacoes = new javax.swing.JButton();
         botaoFuncionariosAtivos = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
         botaoRelatorios = new javax.swing.JButton();
         retiradaDoacoes = new javax.swing.JButton();
         botaoCalendario = new javax.swing.JButton();
         botaoInternoeExterno = new javax.swing.JButton();
-        botaoProjetos = new javax.swing.JButton();
         botaoVoltar = new javax.swing.JButton();
+        botaoProjetos1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        tituloRetirada = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,36 +62,6 @@ public class TelaRelatorios extends javax.swing.JFrame {
                 botaoFuncionariosAtivosActionPerformed(evt);
             }
         });
-
-        jPanel1.setBackground(new java.awt.Color(51, 255, 51));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 502, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 396, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(109, 109, 109)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(243, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(79, 79, 79)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
 
         botaoRelatorios.setText("Relatorios");
         botaoRelatorios.addActionListener(new java.awt.event.ActionListener() {
@@ -107,17 +84,10 @@ public class TelaRelatorios extends javax.swing.JFrame {
             }
         });
 
-        botaoInternoeExterno.setText("Interno e Externo");
+        botaoInternoeExterno.setText("Chamado");
         botaoInternoeExterno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoInternoeExternoActionPerformed(evt);
-            }
-        });
-
-        botaoProjetos.setText("Projetos");
-        botaoProjetos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoProjetosActionPerformed(evt);
             }
         });
 
@@ -128,6 +98,54 @@ public class TelaRelatorios extends javax.swing.JFrame {
             }
         });
 
+        botaoProjetos1.setText("Projetos");
+        botaoProjetos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoProjetos1ActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setBackground(new java.awt.Color(0, 102, 0));
+
+        tituloRetirada.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        tituloRetirada.setForeground(new java.awt.Color(0, 51, 0));
+        tituloRetirada.setText("Relatórios");
+        tituloRetirada.setToolTipText("");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(218, 218, 218)
+                .addComponent(tituloRetirada)
+                .addContainerGap(247, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tituloRetirada)
+                .addContainerGap(10, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(48, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(369, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -137,109 +155,107 @@ public class TelaRelatorios extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botaoProjetos1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(botaoRelatorios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(botaoEntradaDoacoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(retiradaDoacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-                            .addComponent(botaoFuncionariosAtivos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(botaoInternoeExterno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(botaoProjetos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(botaoCalendario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addComponent(botaoInternoeExterno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botaoFuncionariosAtivos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(retiradaDoacoes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botaoCalendario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botaoEntradaDoacoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(12, 12, 12))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(52, 52, 52)
                         .addComponent(botaoVoltar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
                 .addComponent(botaoCalendario)
-                .addGap(44, 44, 44)
+                .addGap(27, 27, 27)
                 .addComponent(botaoEntradaDoacoes)
-                .addGap(40, 40, 40)
+                .addGap(28, 28, 28)
                 .addComponent(retiradaDoacoes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addComponent(botaoFuncionariosAtivos)
-                .addGap(44, 44, 44)
+                .addGap(29, 29, 29)
                 .addComponent(botaoRelatorios)
-                .addGap(48, 48, 48)
+                .addGap(18, 18, 18)
                 .addComponent(botaoInternoeExterno)
-                .addGap(44, 44, 44)
-                .addComponent(botaoProjetos)
-                .addGap(103, 103, 103)
+                .addGap(18, 18, 18)
+                .addComponent(botaoProjetos1)
+                .addGap(18, 18, 18)
                 .addComponent(botaoVoltar)
-                .addGap(22, 22, 22))
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoEntradaDoacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntradaDoacoesActionPerformed
-        TelaEntradaDoacoes telaPrincipal = new TelaEntradaDoacoes();
+        TelaEntradaDoacoes telaPrincipal = new TelaEntradaDoacoes(colaborador);
         telaPrincipal.setVisible(true);
         dispose();// TODO add your handling code here:
     }//GEN-LAST:event_botaoEntradaDoacoesActionPerformed
 
     private void botaoFuncionariosAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFuncionariosAtivosActionPerformed
-        TelaFuncionarios telaPrincipal = new TelaFuncionarios();
+        TelaColaboradores telaPrincipal = new TelaColaboradores(colaborador);
         telaPrincipal.setVisible(true);
         dispose();
 // TODO add your handling code here:
     }//GEN-LAST:event_botaoFuncionariosAtivosActionPerformed
 
     private void botaoCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCalendarioActionPerformed
-        TelaHome telaPrincipal = new TelaHome();
+        TelaHome telaPrincipal = new TelaHome(colaborador);
         telaPrincipal.setVisible(true);
         dispose();// TODO add your handling code here:
 // TODO add your handling code here:
     }//GEN-LAST:event_botaoCalendarioActionPerformed
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
-        TelaHome telaPrincipal = new TelaHome();
+        TelaHome telaPrincipal = new TelaHome(colaborador);
         telaPrincipal.setVisible(true);
         dispose();// TODO add your handling code here:
     }//GEN-LAST:event_botaoVoltarActionPerformed
 
-    private void botaoProjetosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProjetosActionPerformed
-        TelaProjetos telaPrincipal = new TelaProjetos();
-        telaPrincipal.setVisible(true);
-        dispose();// TODO add your handling code here:
-    }//GEN-LAST:event_botaoProjetosActionPerformed
-
     private void retiradaDoacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retiradaDoacoesActionPerformed
-        TelaRetiradaDoaocoes telaPrincipal = new TelaRetiradaDoaocoes();
+        TelaRetiradaDoacoes telaPrincipal = new TelaRetiradaDoacoes(colaborador);
         telaPrincipal.setVisible(true);
         dispose();// TODO add your handling code here:
     }//GEN-LAST:event_retiradaDoacoesActionPerformed
 
     private void botaoRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRelatoriosActionPerformed
-        TelaRelatorios telaPrincipal = new TelaRelatorios();
+        TelaRelatorios telaPrincipal = new TelaRelatorios(colaborador);
         telaPrincipal.setVisible(true);
         dispose();// TODO add your handling code here:
     }//GEN-LAST:event_botaoRelatoriosActionPerformed
 
     private void botaoInternoeExternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoInternoeExternoActionPerformed
-        TelaChamado telaPrincipal = new TelaChamado();
+        TelaChamado telaPrincipal = new TelaChamado(colaborador);
         telaPrincipal.setVisible(true);
         dispose();// TODO add your handling code here:
     }//GEN-LAST:event_botaoInternoeExternoActionPerformed
+
+    private void botaoProjetos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProjetos1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoProjetos1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -302,7 +318,8 @@ public class TelaRelatorios extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaRelatorios().setVisible(true);
+                ColaboradorModel colaborador= null;
+                new TelaRelatorios(colaborador).setVisible(true);
             }
         });
     }
@@ -312,12 +329,13 @@ public class TelaRelatorios extends javax.swing.JFrame {
     private javax.swing.JButton botaoEntradaDoacoes;
     private javax.swing.JButton botaoFuncionariosAtivos;
     private javax.swing.JButton botaoInternoeExterno;
-    private javax.swing.JButton botaoProjetos;
+    private javax.swing.JButton botaoProjetos1;
     private javax.swing.JButton botaoRelatorios;
     private javax.swing.JButton botaoVoltar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JButton retiradaDoacoes;
+    private javax.swing.JLabel tituloRetirada;
     // End of variables declaration//GEN-END:variables
 }

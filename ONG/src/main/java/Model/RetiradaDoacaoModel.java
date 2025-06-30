@@ -13,8 +13,16 @@ public class RetiradaDoacaoModel {
     private String destinatario;
     private String tipo;
     private int quantidade;
-    private String duracao;
-    private int chamado;
+    private String data;
+    private int idChamado;
+
+    public int getIdChamado() {
+        return idChamado;
+    }
+
+    public void setIdChamado(int idChamado) {
+        this.idChamado = idChamado;
+    }
 
     public RetiradaDoacaoModel() {
     }
@@ -24,8 +32,8 @@ public class RetiradaDoacaoModel {
         this.destinatario = destinatario;
         this.tipo = tipo;
         this.quantidade = quantidade;
-        this.duracao = duracao;
-        this.chamado = chamado;
+        this.data = data;
+        
     }
 
     public int getIdRetiradaDoacaoArrecadacao() {
@@ -60,23 +68,12 @@ public class RetiradaDoacaoModel {
         this.quantidade = quantidade;
     }
 
-    public String getDuracao() {
-        return duracao;
+    public String getData() {
+        return data;
     }
 
-    public void setDuracao(String duracao) {
-        this.duracao = duracao;
-    }
-
-    public int getChamado() {
-        return chamado;
-    }
-
-    public void setChamado(int chamado) {
-        this.chamado = chamado;
-    }
-    
-    
-    
+    public void setData(String data) {
+        this.data = data;
+    }   
     
 }

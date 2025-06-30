@@ -5,11 +5,23 @@
 package Model;
 
 public class ChamadoModel {
+
     private int idChamado;
     private String tipo;
     private String problema;
     private String resolvido;
     private int colaboradorIdVoluntario;
+    private String nomeChamado;
+
+    private String nomeColaborador;
+
+    public String getNomeColaborador() {
+        return nomeColaborador;
+    }
+
+    public void setNomeColaborador(String nomeColaborador) {
+        this.nomeColaborador = nomeColaborador;
+    }
 
     public ChamadoModel() {
     }
@@ -28,6 +40,14 @@ public class ChamadoModel {
 
     public void setIdChamado(int idChamado) {
         this.idChamado = idChamado;
+    }
+
+    public String getNomeChamado() {
+        return nomeChamado;
+    }
+
+    public void setNomeChamado(String nomeChamado) {
+        this.nomeChamado = nomeChamado;
     }
 
     public String getTipo() {
@@ -62,4 +82,3 @@ public class ChamadoModel {
         this.colaboradorIdVoluntario = colaboradorIdVoluntario;
     }
 }
-

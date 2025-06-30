@@ -8,7 +8,7 @@ package Model;
  *
  * @author ALUNO
  */
-public class ColaboradoresModel {
+public class ColaboradorModel {
    private int idColaborador;
     private String nome;
     private String cpf;
@@ -18,11 +18,12 @@ public class ColaboradoresModel {
     private String email;
     private String senha;
     private String telefone;
+   
 
-    public ColaboradoresModel() {
+    public ColaboradorModel() {
     }
 
-    public ColaboradoresModel(int idColaborador, String nome, String cpf, String funcao, String sexo, String dataNascimento, String email, String senha, String telefone) {
+    public ColaboradorModel(int idColaborador, String nome, String cpf, String funcao, String sexo, String dataNascimento, String email, String senha, String telefone) {
         this.idColaborador = idColaborador;
         this.nome = nome;
         this.cpf = cpf;

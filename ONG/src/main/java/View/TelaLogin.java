@@ -4,6 +4,10 @@
  */
 package View;
 
+import Controller.ColaboradorController;
+import Model.ColaboradorModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ALUNO
@@ -13,8 +17,11 @@ public class TelaLogin extends javax.swing.JFrame {
     /**
      * Creates new form TelaCadastroVoluntario
      */
+    ColaboradorController controller = new ColaboradorController();
+
     public TelaLogin() {
         initComponents();
+
     }
 
     /**
@@ -30,6 +37,7 @@ public class TelaLogin extends javax.swing.JFrame {
         painelCadastro = new javax.swing.JPanel();
         labelEmail = new javax.swing.JLabel();
         labelSenha = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         barraSenha = new javax.swing.JPasswordField();
         barraEmail = new javax.swing.JTextField();
         botaoAcesso = new javax.swing.JToggleButton();
@@ -41,26 +49,39 @@ public class TelaLogin extends javax.swing.JFrame {
         painelPrincipal.setBackground(new java.awt.Color(0, 51, 0));
 
         painelCadastro.setBackground(new java.awt.Color(204, 255, 255));
+        painelCadastro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         labelEmail.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelEmail.setForeground(new java.awt.Color(0, 102, 0));
         labelEmail.setText("Digite seu e-mail");
+        painelCadastro.add(labelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 40, -1, -1));
 
         labelSenha.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelSenha.setForeground(new java.awt.Color(0, 102, 0));
         labelSenha.setText("Digite sua senha");
+        painelCadastro.add(labelSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\ALUNO\\Downloads\\hide.png")); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+        painelCadastro.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, -1, 30));
 
         barraSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 barraSenhaActionPerformed(evt);
             }
         });
+        painelCadastro.add(barraSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 195, 39));
 
         barraEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 barraEmailActionPerformed(evt);
             }
         });
+        painelCadastro.add(barraEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 71, 249, 39));
 
         botaoAcesso.setBackground(new java.awt.Color(0, 102, 0));
         botaoAcesso.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -70,62 +91,23 @@ public class TelaLogin extends javax.swing.JFrame {
                 botaoAcessoActionPerformed(evt);
             }
         });
+        painelCadastro.add(botaoAcesso, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 238, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 255));
         jLabel1.setText("Cadastre-se");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+        painelCadastro.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 279, -1, -1));
 
         jLabel2.setBackground(new java.awt.Color(255, 0, 0));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(204, 0, 0));
         jLabel2.setText("Esqueci minha senha");
-
-        javax.swing.GroupLayout painelCadastroLayout = new javax.swing.GroupLayout(painelCadastro);
-        painelCadastro.setLayout(painelCadastroLayout);
-        painelCadastroLayout.setHorizontalGroup(
-            painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelCadastroLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botaoAcesso)
-                .addGap(90, 90, 90))
-            .addGroup(painelCadastroLayout.createSequentialGroup()
-                .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(labelSenha)
-                            .addComponent(labelEmail)
-                            .addGroup(painelCadastroLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(barraEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                                    .addComponent(barraSenha)))))
-                    .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)))
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-        painelCadastroLayout.setVerticalGroup(
-            painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelCadastroLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(labelEmail)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(barraEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(labelSenha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(barraSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(botaoAcesso)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addContainerGap(29, Short.MAX_VALUE))
-        );
+        painelCadastro.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 279, -1, -1));
 
         javax.swing.GroupLayout painelPrincipalLayout = new javax.swing.GroupLayout(painelPrincipal);
         painelPrincipal.setLayout(painelPrincipalLayout);
@@ -134,14 +116,14 @@ public class TelaLogin extends javax.swing.JFrame {
             .addGroup(painelPrincipalLayout.createSequentialGroup()
                 .addGap(505, 505, 505)
                 .addComponent(painelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(506, Short.MAX_VALUE))
+                .addContainerGap(524, Short.MAX_VALUE))
         );
         painelPrincipalLayout.setVerticalGroup(
             painelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelPrincipalLayout.createSequentialGroup()
-                .addGap(153, 153, 153)
+                .addGap(141, 141, 141)
                 .addComponent(painelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(213, Short.MAX_VALUE))
+                .addContainerGap(246, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -167,14 +149,48 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_barraEmailActionPerformed
 
     private void botaoAcessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAcessoActionPerformed
-        // TODO add your handling code here:
-       TelaHome telaPrincipal = new TelaHome();
-       //abrindo a tela home
-       telaPrincipal.setVisible(true);
-       
-       //fechando a tela de login
-       dispose();
+
+        String email = barraEmail.getText();
+        String senha = new String(barraSenha.getPassword());
+
+        if (email.isEmpty() || senha.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha o e-mail e a senha.");
+        } else {
+            ColaboradorModel usuarioLogado = controller.login(email, senha);
+
+            if (usuarioLogado != null) {
+                JOptionPane.showMessageDialog(null, "Login realizado com sucesso!\nBem-vindo(a), " + usuarioLogado.getNome());
+                // Aqui você pode abrir a próxima tela ou salvar os dados do usuário logado
+               TelaHome home= new TelaHome(usuarioLogado);
+               home.setVisible(true);
+               dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "E-mail ou senha inválidos.");
+            }
+        }
+
+        
     }//GEN-LAST:event_botaoAcessoActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+        
+        TelaCadastroColaboradores tela = new TelaCadastroColaboradores();
+        tela.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jLabel1MouseClicked
+    boolean senhaVisivel=false;
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+        if(senhaVisivel==false){
+        barraSenha.setEchoChar((char) 0);
+        senhaVisivel=true;
+        }else{
+            barraSenha.setEchoChar('*');
+            senhaVisivel=false;
+        }
+        
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -220,6 +236,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JToggleButton botaoAcesso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel labelSenha;
     private javax.swing.JPanel painelCadastro;

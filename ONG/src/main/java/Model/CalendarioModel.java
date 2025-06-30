@@ -12,6 +12,44 @@ public class CalendarioModel {
     private String participantes;
     private String descricao;
     private String anexos;
+    private int idEntradaDoacao;
+    private int idRetiradaDoacao;
+    
+    private String nomeEntradaDoacao;
+    private String nomeRetiradaDoacao;
+
+    public int getIdEntradaDoacao() {
+        return idEntradaDoacao;
+    }
+
+    public void setIdEntradaDoacao(int idEntradaDoacao) {
+        this.idEntradaDoacao = idEntradaDoacao;
+    }
+
+    public int getIdRetiradaDoacao() {
+        return idRetiradaDoacao;
+    }
+
+    public void setIdRetiradaDoacao(int idRetiradaDoacao) {
+        this.idRetiradaDoacao = idRetiradaDoacao;
+    }
+
+    public String getNomeEntradaDoacao() {
+        return nomeEntradaDoacao;
+    }
+
+    public void setNomeEntradaDoacao(String nomeEntradaDoacao) {
+        this.nomeEntradaDoacao = nomeEntradaDoacao;
+    }
+
+    public String getNomeRetiradaDoacao() {
+        return nomeRetiradaDoacao;
+    }
+
+    public void setNomeRetiradaDoacao(String nomeRetiradaDoacao) {
+        this.nomeRetiradaDoacao = nomeRetiradaDoacao;
+    }
+    
 
     public CalendarioModel() {
     }

@@ -4,75 +4,139 @@
  */
 package View;
 
-import Controller.EntradaDoacaoController;
+import Controller.ColaboradorController;
+
 import Model.ColaboradorModel;
-import Model.EntradaDoacaoModel;
+import View.TelaProjetos;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author ALUNO
  */
-public class TelaEntradaDoacoes extends javax.swing.JFrame {
+public class TelaColaboradores extends javax.swing.JFrame {
 
-    EntradaDoacaoController controller = new EntradaDoacaoController();
+    /**
+     * Creates new form Relatorios
+     */
+    
+    ColaboradorController controller = new ColaboradorController();
+            
+   
 
-    ColaboradorModel colaborador = new ColaboradorModel();
-
-    TelaEntradaDoacoes(ColaboradorModel usuarioLogado) {
-        colaborador = usuarioLogado;
-
+    
+     ColaboradorModel colaborador = new ColaboradorModel();
+    TelaColaboradores(ColaboradorModel usuarioLogado) {
+       colaborador=usuarioLogado;
         initComponents();
-        listarEntradaDoacoesTabela();
+        listaColaboradoresTabela();
+    }
+    
+    private void cadastrarColaborador() {
+    try {
+        // Criar objeto do model (ajuste o nome conforme seu projeto)
+        ColaboradorModel colaborador = new ColaboradorModel();
+
+        // Captura os dados dos campos da interface
+        colaborador.setNome(jTextField1.getText());
+        colaborador.setEmail(jTextField2.getText());
+        colaborador.setTelefone(jTextField3.getText());
+        colaborador.setFuncao(jTextField4.getText());
+
+        // Chama o controller (ajuste o nome se necessário)
+        ColaboradorController controller = new ColaboradorController();
+        Boolean resultado = controller.cadastrar(colaborador);
+
+        // Mostra a mensagem de retorno
+        JOptionPane.showMessageDialog(this, resultado);
+
+        // Atualiza a tabela e limpa os campos
+        atualizarTabelaColaboradores();
+        limparCamposColaborador();
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Erro ao cadastrar colaborador: " + e.getMessage());
+    }
+}
+private void atualizarTabelaColaboradores() {
+    ColaboradorController controller = new ColaboradorController();
+    List<ColaboradorModel> lista = controller.listar();
+
+    DefaultTableModel modelo = new DefaultTableModel();
+    modelo.addColumn("ID");
+    modelo.addColumn("Nome");
+    modelo.addColumn("Email");
+    modelo.addColumn("Telefone");
+    modelo.addColumn("Função");
+
+    for (ColaboradorModel c : lista) {
+        modelo.addRow(new Object[]{
+            c.getIdColaborador(),
+            c.getNome(),
+            c.getEmail(),
+            c.getTelefone(),
+            c.getFuncao()
+        });
     }
 
-    private void atualizarTabelaEntradaDoacao() {
-        EntradaDoacaoController controller = new EntradaDoacaoController();
-        List<EntradaDoacaoModel> lista = controller.listar();
+    tabelaColaboradores.setModel(modelo);
+}
+private void limparCamposColaborador() {
+    jTextField1.setText("");
+    jTextField2.setText("");
+    jTextField3.setText("");
+    jTextField4.setText("");
+}
 
-        DefaultTableModel modelo = (DefaultTableModel) tabelaEntradaDoacao.getModel();
-       modelo.setRowCount(0);
-
-        for (EntradaDoacaoModel e : lista) {
-            modelo.addRow(new Object[]{
-                
-                e.getFornecedor(),
-                e.getTipo(),
-                e.getQuantidade()
-               
-            });
-        }
-
-        tabelaEntradaDoacao.setModel(modelo);
+    
+    
+    private void listaColaboradoresTabela(){
+        List <ColaboradorModel> listaColaboradoresTabela = controller.listar();
+        DefaultTableModel modelo = (DefaultTableModel)
+        tabelaColaboradores.getModel();
+          modelo.setRowCount(0);
+          
+          for(ColaboradorModel c : listaColaboradoresTabela){
+              modelo.addRow(new Object[]{
+              c.getNome(),
+              c.getCpf(),
+              c.getFuncao(),
+              c.getSexo(),
+              c.getDataNascimento(),
+              c.getEmail(),
+              c.getSenha(),
+              c.getTelefone()
+              
+              
+              });
+          }
+          
+          
+          
+          
+          
+          
+          
+          
     }
-
-    private void limparCamposEntradaDoacao() {
-        fornecer.setText("");
-        tipo.setText("");
-        quantidade.setText("");
-        duracao.setText("");
-    }
-
-    public void listarEntradaDoacoesTabela() {
-        List<EntradaDoacaoModel> listarEntradaDoacaoTabela = controller.listar();
-        DefaultTableModel modelo = (DefaultTableModel) tabelaEntradaDoacao.getModel();
-        modelo.setRowCount(0);
-
-        for (EntradaDoacaoModel c : listarEntradaDoacaoTabela) {
-
-            modelo.addRow(new Object[]{
-                c.getFornecedor(),
-                c.getTipo(),
-                c.getQuantidade()
-               
-
-            });
-
-        }
-    }
-
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,17 +150,17 @@ public class TelaEntradaDoacoes extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaEntradaDoacao = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabelaColaboradores = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        fornecer = new javax.swing.JTextField();
-        tipo = new javax.swing.JTextField();
-        quantidade = new javax.swing.JTextField();
-        duracao = new javax.swing.JTextField();
-        labelDura = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
         TituloProjeto = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
         pesquisarProjetos = new javax.swing.JTextField();
@@ -127,44 +191,46 @@ public class TelaEntradaDoacoes extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 0));
 
-        tabelaEntradaDoacao.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaColaboradores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Fornecedor", "Tipo", "Quantidade"
+                "Nome", "Ativo", "Tempo", "Observações"
             }
         ));
-        jScrollPane1.setViewportView(tabelaEntradaDoacao);
+        jScrollPane2.setViewportView(tabelaColaboradores);
 
         jPanel3.setBackground(new java.awt.Color(102, 255, 102));
+        jPanel3.setForeground(new java.awt.Color(0, 102, 0));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 0));
-        jLabel1.setText("Fornecedor:");
+        jLabel1.setText("Nome:");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 51, 0));
-        jLabel2.setText("Tipo:");
+        jLabel2.setText("Ativo:");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 51, 0));
-        jLabel3.setText("Quantidade:");
+        jLabel3.setText("Tempo:");
 
-        labelDura.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        labelDura.setForeground(new java.awt.Color(0, 51, 0));
-        labelDura.setText("Duração:");
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 51, 0));
+        jLabel4.setText("Observações:");
 
         TituloProjeto.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         TituloProjeto.setForeground(new java.awt.Color(0, 102, 0));
-        TituloProjeto.setText("Entrada");
+        TituloProjeto.setText("Administrar Colaboradores");
 
         jButton8.setBackground(new java.awt.Color(0, 153, 0));
         jButton8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton8.setText("Adicionar:");
+        jButton8.setToolTipText("");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
@@ -176,58 +242,62 @@ public class TelaEntradaDoacoes extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(34, 34, 34)
+                .addComponent(TituloProjeto)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fornecer))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tipo))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(quantidade))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(labelDura)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField1))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jButton8)
-                                .addGap(0, 87, Short.MAX_VALUE))
-                            .addComponent(duracao))))
-                .addGap(18, 18, 18))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(TituloProjeto)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jTextField4))))
+                .addGap(12, 12, 12))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addComponent(TituloProjeto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(fornecer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
-                    .addComponent(tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelDura)
-                    .addComponent(duracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton8)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(12, 12, 12))
         );
 
         pesquisarProjetos.setText("PESQUISAR:");
@@ -236,29 +306,30 @@ public class TelaEntradaDoacoes extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(pesquisarProjetos, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76)))
-                .addContainerGap(129, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(518, 518, 518)
+                        .addComponent(pesquisarProjetos, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(106, 106, 106)
                 .addComponent(pesquisarProjetos, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(132, Short.MAX_VALUE))
         );
 
         jButton3.setText("Relatorios");
@@ -318,35 +389,36 @@ public class TelaEntradaDoacoes extends javax.swing.JFrame {
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botaoVoltar)
-                        .addGap(49, 49, 49)))
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(botaoVoltar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(7, Short.MAX_VALUE)
                 .addComponent(jButton5)
                 .addGap(44, 44, 44)
                 .addComponent(jButton1)
-                .addGap(40, 40, 40)
+                .addGap(42, 42, 42)
                 .addComponent(jButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(30, 30, 30)
-                .addComponent(jButton3)
-                .addGap(36, 36, 36)
-                .addComponent(jButton6)
                 .addGap(44, 44, 44)
+                .addComponent(jButton2)
+                .addGap(40, 40, 40)
+                .addComponent(jButton3)
+                .addGap(44, 44, 44)
+                .addComponent(jButton6)
+                .addGap(43, 43, 43)
                 .addComponent(jButton7)
-                .addGap(41, 41, 41)
+                .addGap(43, 43, 43)
                 .addComponent(botaoVoltar)
-                .addGap(84, 84, 84))
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(44, 44, 44))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -357,7 +429,7 @@ public class TelaEntradaDoacoes extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -367,13 +439,15 @@ public class TelaEntradaDoacoes extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         TelaEntradaDoacoes telaPrincipal = new TelaEntradaDoacoes(colaborador);
         telaPrincipal.setVisible(true);
-        dispose();// TODO add your handling code here:
+        dispose();
+// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         TelaColaboradores telaPrincipal = new TelaColaboradores(colaborador);
         telaPrincipal.setVisible(true);
-        dispose();// TODO add your handling code here:
+        dispose();
+// TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -386,8 +460,7 @@ public class TelaEntradaDoacoes extends javax.swing.JFrame {
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
         TelaHome telaPrincipal = new TelaHome(colaborador);
         telaPrincipal.setVisible(true);
-        dispose();
-        // TODO add your handling code here:
+        dispose();// TODO add your handling code here:
     }//GEN-LAST:event_botaoVoltarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -399,48 +472,37 @@ public class TelaEntradaDoacoes extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         TelaRelatorios telaPrincipal = new TelaRelatorios(colaborador);
         telaPrincipal.setVisible(true);
-        dispose();// TODO add your handling code here:
+        dispose();
+// TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         TelaChamado telaPrincipal = new TelaChamado(colaborador);
         telaPrincipal.setVisible(true);
-        dispose();// TODO add your handling code here:
+        dispose();
+// TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         TelaProjetos telaPrincipal = new TelaProjetos(colaborador);
         telaPrincipal.setVisible(true);
-        dispose();// TODO add your handling code here:
+        dispose();
+// TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code her
-        String tipoTexto = tipo.getText().trim();
-        String fornecedorTexto = fornecer.getText().trim();
-        String duracaotexto = duracao.getText().trim();
-        int quantidadeTexto = Integer.parseInt(quantidade.getText().trim());
-
-       
-
-        EntradaDoacaoModel entrada = new EntradaDoacaoModel();
-        entrada.setTipo(tipoTexto);
-        entrada.setFornecedor(fornecedorTexto);
-        entrada.setQuantidade(quantidadeTexto);
-        entrada.setDuracao(duracaotexto);
-
-        EntradaDoacaoController controller = new EntradaDoacaoController();
-        boolean sucesso = controller.cadastrar(entrada);
-
-        if (sucesso) {
-            JOptionPane.showMessageDialog(this, "Entrada de doação cadastrada com sucesso!");
-            limparCamposEntradaDoacao();
-            listarEntradaDoacoesTabela(); // Atualiza a tabela
-        } else {
-            JOptionPane.showMessageDialog(this, "Erro ao cadastrar entrada.");
-        }
+        // TODO add your handling code here:
         
-         listarEntradaDoacoesTabela();
+
+
+
+    
+
+   
+
+
+        
+        
     }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
@@ -460,14 +522,70 @@ public class TelaEntradaDoacoes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaEntradaDoacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaColaboradores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaEntradaDoacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaColaboradores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaEntradaDoacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaColaboradores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaEntradaDoacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaColaboradores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -480,8 +598,8 @@ public class TelaEntradaDoacoes extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ColaboradorModel colaborador = null;
-                new TelaEntradaDoacoes(colaborador).setVisible(true);
+                 ColaboradorModel colaborador= null;
+                new TelaColaboradores(colaborador).setVisible(true);
             }
         });
     }
@@ -489,8 +607,6 @@ public class TelaEntradaDoacoes extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel TituloProjeto;
     private javax.swing.JButton botaoVoltar;
-    private javax.swing.JTextField duracao;
-    private javax.swing.JTextField fornecer;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -502,14 +618,16 @@ public class TelaEntradaDoacoes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel labelDura;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField pesquisarProjetos;
-    private javax.swing.JTextField quantidade;
-    private javax.swing.JTable tabelaEntradaDoacao;
-    private javax.swing.JTextField tipo;
+    private javax.swing.JTable tabelaColaboradores;
     // End of variables declaration//GEN-END:variables
 }

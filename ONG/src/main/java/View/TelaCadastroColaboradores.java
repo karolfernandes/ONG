@@ -4,8 +4,9 @@
  */
 package View;
 
-import Controller.ColaboradoresController;
-import Model.ColaboradoresModel;
+import Controller.ColaboradorController;
+
+import Model.ColaboradorModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,9 +18,8 @@ public class TelaCadastroColaboradores extends javax.swing.JFrame {
     /**
      * Creates new form TelaCadastroColaboradores
      */
-    
-    
-    ColaboradoresController controller = new ColaboradoresController();
+    ColaboradorController controller = new ColaboradorController();
+
     public TelaCadastroColaboradores() {
         initComponents();
     }
@@ -146,20 +146,15 @@ public class TelaCadastroColaboradores extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 749, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 834, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cpfdigitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpfdigitarActionPerformed
@@ -172,24 +167,43 @@ public class TelaCadastroColaboradores extends javax.swing.JFrame {
 
     private void cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarActionPerformed
         // TODO add your handling code here:
-        ColaboradoresModel funcionario = new ColaboradoresModel();
-        funcionario.setNome (nomedigitar.getText());
-        funcionario.setEmail(emaildigitar.getText());
-        // Capturrar dados da Combox
-        funcionario.setSexo((String)sexoEscolher.getSelectedItem());
-        //Capturar senha
-        funcionario.setSenha( new String (senhadigitar.getPassword()));
-        //Capturar os dados dos campos formatados
-        funcionario.setCpf(cpfdigitar.getText());
-        funcionario.setFuncao((String)escolherfuncao.getSelectedItem());
-        funcionario.setDataNascimento(dataNascimento.getText());
+        String nome = nomedigitar.getText();
+        String email = emaildigitar.getText();
+        String sexo = (String) sexoEscolher.getSelectedItem();
+        String senha = new String(senhadigitar.getPassword());
+        String cpf = cpfdigitar.getText();
+        String funcao = (String) escolherfuncao.getSelectedItem();
+        String dataNasc = dataNascimento.getText();
 
-        boolean result = controller.cadastrarColaboradores(funcionario);
-        if(result!=false){
-            JOptionPane.showMessageDialog(null,"Cadastrado com sucesso!");
-        }else{
-            JOptionPane.showMessageDialog(null,"Erro ao Cadastrar!");
+// Verificar se algum campo está vazio
+        if (nome.isEmpty() || email.isEmpty() || sexo == null || sexo.isEmpty()
+                || senha.isEmpty() || cpf.isEmpty() || funcao == null || funcao.isEmpty()
+                || dataNasc.isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos antes de cadastrar.");
+        } else {
+            ColaboradorModel funcionario = new ColaboradorModel();
+            funcionario.setNome(nome);
+            funcionario.setEmail(email);
+            funcionario.setSexo(sexo);
+            funcionario.setSenha(senha);
+            funcionario.setCpf(cpf);
+            funcionario.setFuncao(funcao);
+            funcionario.setDataNascimento(dataNasc);
+
+            Boolean result = controller.cadastrar(funcionario);
+            if (result != null) {
+                JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
+                
+                TelaLogin tl = new TelaLogin();
+                tl.setVisible(true);
+                dispose();
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao Cadastrar!");
+            }
         }
+
 
     }//GEN-LAST:event_cadastrarActionPerformed
 

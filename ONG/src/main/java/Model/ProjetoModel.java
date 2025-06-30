@@ -10,9 +10,44 @@ public class ProjetoModel {
     private String horario;
     private String dataProjeto;
     private String duracao;
-    private int chamadoIdChamado;
+    private int idChamado;
+    private String nomeChamado;
+    private int idColaborador;
+    private String nomeColaborador;
 
     public ProjetoModel() {
+    }
+
+    public int getIdChamado() {
+        return idChamado;
+    }
+
+    public void setIdChamado(int idChamado) {
+        this.idChamado = idChamado;
+    }
+
+    public String getNomeChamado() {
+        return nomeChamado;
+    }
+
+    public void setNomeChamado(String nomeChamado) {
+        this.nomeChamado = nomeChamado;
+    }
+
+    public int getIdColaborador() {
+        return idColaborador;
+    }
+
+    public void setIdColaborador(int idColaborador) {
+        this.idColaborador = idColaborador;
+    }
+
+    public String getNomeColaborador() {
+        return nomeColaborador;
+    }
+
+    public void setNomeColaborador(String nomeColaborador) {
+        this.nomeColaborador = nomeColaborador;
     }
 
     public ProjetoModel(int idProjeto, String nome, String horario, String dataProjeto, String duracao, int chamadoIdChamado) {
@@ -21,7 +56,7 @@ public class ProjetoModel {
         this.horario = horario;
         this.dataProjeto = dataProjeto;
         this.duracao = duracao;
-        this.chamadoIdChamado = chamadoIdChamado;
+        this.idChamado = idChamado;
     }
 
     public int getIdProjeto() {
@@ -65,10 +100,10 @@ public class ProjetoModel {
     }
 
     public int getChamadoIdChamado() {
-        return chamadoIdChamado;
+        return idChamado;
     }
 
     public void setChamadoIdChamado(int chamadoIdChamado) {
-        this.chamadoIdChamado = chamadoIdChamado;
+        this.idChamado = chamadoIdChamado;
     }
 }
